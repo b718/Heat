@@ -1,0 +1,6 @@
+default:
+    @just --list
+
+# Set-up local dev
+set-up-local-dev:
+    @bun run dev

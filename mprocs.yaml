@@ -1,0 +1,5 @@
+procs:
+  front-end:
+    shell: "cd front-end && bun run dev"
+  back-end:
+    shell: "cd back-end && just set-up-local-dev"
