@@ -18,3 +18,7 @@ set-up-project:
 # Create a new Bun package
 create-package:
     @cd scripts && python3 create_package.py
+
+# Format Project
+format:
+    @bun run format
