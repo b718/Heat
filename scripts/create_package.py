@@ -1,7 +1,7 @@
 import json
 import subprocess
 
-with open("./scripts/project.txt") as f:
+with open("./project.txt") as f:
     PROJECT_NAME = f.read().strip().split("PROJECT_NAME=")[1]
 
 def main():
