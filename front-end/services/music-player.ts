@@ -1,6 +1,7 @@
 import { serverUrl, spotifyApiURL } from "@/consts/api";
+import { Directon } from "@heat/types";
 
-export async function skip(direction: "forward" | "backward"): Promise<void> {
+export async function skip(direction: Directon): Promise<void> {
 	await fetch(`${serverUrl}/skip`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
