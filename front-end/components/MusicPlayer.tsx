@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
-import { skip } from "@/services/music-player";
-import type { SpotifyPlayer, SpotifyTrack } from "@/types/spotify-sdk";
+import { buildSkipRequest, skip } from "@/services/music-player";
+import type { SpotifyPlayer, SpotifyPlayerState, SpotifyTrack } from "@/types/spotify-sdk";
 
 export default function MusicPlayer({ token }: { token: string }) {
 	const { playerRef, playerState, loading, error } = useSpotifyPlayer(token);
@@ -62,9 +62,10 @@ export default function MusicPlayer({ token }: { token: string }) {
 				<SongDescription track={currentTrack} />
 				<SongDuration position={position} durationMs={currentTrack.duration_ms} onSeek={handleSeek} />
 				<SongControls
-					paused={playerState.paused}
+					playerState={playerState}
 					volume={volume}
 					player={playerRef.current}
+					position={position}
 					onVolumeChange={handleVolumeChange}
 				/>
 			</div>
@@ -112,28 +113,35 @@ function SongDuration({
 				value={position}
 				onChange={(e) => onSeek(parseInt(e.target.value))}
 				className="slider w-full"
-				style={{ background: getSliderGradient(progressPercentage) }}
+				style={{ background: sliderGradient(progressPercentage) }}
 			/>
 			<div className="flex justify-between text-xs text-zinc-400">
-				<span>{formatMs(position)}</span>
-				<span>{formatMs(durationMs)}</span>
+				<span>{formatDuration(position)}</span>
+				<span>{formatDuration(durationMs)}</span>
 			</div>
 		</div>
 	);
 }
 
 function SongControls({
-	paused,
+	playerState,
 	volume,
 	player,
+	position,
 	onVolumeChange,
 }: {
-	paused: boolean;
+	playerState: SpotifyPlayerState;
 	volume: number;
 	player: SpotifyPlayer | null;
+	position: number;
 	onVolumeChange: (v: number) => void;
 }) {
+	const { paused, track_window } = playerState;
 	const volumePercentage = volume * 100;
+	const currentTrack = track_window.current_track;
+	const hasPreviousTracks = track_window.previous_tracks.length > 0;
+	const hasNextTracks = track_window.next_tracks.length > 0;
+
 	return (
 		<div className="flex w-xl items-center gap-2">
 			<button
@@ -143,20 +151,22 @@ function SongControls({
 				{paused ? "▶" : "⏸"}
 			</button>
 			<button
+				disabled={!hasPreviousTracks}
 				onClick={async () => {
 					await player?.previousTrack();
-					await skip("backwards");
+					await skip(buildSkipRequest("backwards", currentTrack, position));
 				}}
-				className="rounded-full bg-zinc-800 px-4 py-2 text-sm font-bold hover:bg-zinc-700 transition-colors"
+				className="rounded-full bg-zinc-800 px-4 py-2 text-sm font-bold hover:bg-zinc-700 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{"<<"}
 			</button>
 			<button
+				disabled={!hasNextTracks}
 				onClick={async () => {
 					await player?.nextTrack();
-					await skip("forwards");
+					await skip(buildSkipRequest("forwards", currentTrack, position));
 				}}
-				className="rounded-full bg-zinc-800 px-4 py-2 text-sm font-bold hover:bg-zinc-700 transition-colors"
+				className="rounded-full bg-zinc-800 px-4 py-2 text-sm font-bold hover:bg-zinc-700 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			>
 				{">>"}
 			</button>
@@ -183,19 +193,19 @@ function SongControls({
 				value={volume}
 				onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
 				className="slider w-24"
-				style={{ background: getSliderGradient(volumePercentage) }}
+				style={{ background: sliderGradient(volumePercentage) }}
 			/>
 		</div>
 	);
 }
 
-function formatMs(ms: number): string {
+function formatDuration(ms: number): string {
 	const totalSec = Math.floor(ms / 1000);
 	const min = Math.floor(totalSec / 60);
 	const sec = (totalSec % 60).toString().padStart(2, "0");
 	return `${min}:${sec}`;
 }
 
-function getSliderGradient(percentage: number): string {
+function sliderGradient(percentage: number): string {
 	return `linear-gradient(to right, #22c55e ${percentage}%, #3f3f46 ${percentage}%)`;
 }

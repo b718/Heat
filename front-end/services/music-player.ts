@@ -1,13 +1,29 @@
 import { serverUrl, spotifyApiURL } from "@/consts/api";
-import { Directon } from "@heat/types";
+import { SpotifyTrack } from "@/types/spotify-sdk";
+import { Directon, SkipRequest } from "@heat/types";
 
 import Playlist from "./data/playlist.json";
 
-export async function skip(direction: Directon): Promise<void> {
+export function buildSkipRequest(
+	direction: Directon,
+	currentTrack: SpotifyTrack,
+	position: number,
+): SkipRequest {
+	return {
+		direction,
+		songId: currentTrack.id,
+		songName: currentTrack.name,
+		songArtists: currentTrack.artists,
+		currentTime: position,
+		duration: currentTrack.duration_ms,
+	};
+}
+
+export async function skip(request: SkipRequest): Promise<void> {
 	await fetch(`${serverUrl}/skip`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ direction }),
+		body: JSON.stringify(request),
 	});
 }
 

@@ -1,4 +1,5 @@
 export interface SpotifyTrack {
+	id: string;
 	name: string;
 	artists: { name: string }[];
 	album: { images: { url: string }[] };
@@ -8,7 +9,11 @@ export interface SpotifyTrack {
 export interface SpotifyPlayerState {
 	paused: boolean;
 	position: number;
-	track_window: { current_track: SpotifyTrack };
+	track_window: {
+		current_track: SpotifyTrack;
+		next_tracks: SpotifyTrack[];
+		previous_tracks: SpotifyTrack[];
+	};
 }
 
 export interface SpotifyPlayer {
