@@ -1,6 +1,10 @@
+mod postgres './justfiles/postgres.just'
+
 default:
     @just --list
 
 # Set-up local dev
 set-up-local-dev:
+    @just postgres::start
+    @sleep 1
     @bun run dev
