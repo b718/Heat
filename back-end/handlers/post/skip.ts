@@ -1,12 +1,21 @@
-import type { Directon } from "@heat/types";
+import type { Directon, SkipRequest } from "@heat/types";
 import type { Context } from "hono";
 
 import { getLogger } from "../../logger/logger";
+import type { Storer } from "../../modules/storer/storer";
 
 const logger = getLogger();
 
-export async function skip(c: Context) {
-	const body = await c.req.json<{ direction: Directon }>();
-	logger.info({ direction: body.direction }, "track skipped");
-	return c.json({ ok: true });
+export function skip(storer: Storer) {
+	return async function (c: Context) {
+		try {
+			const body: SkipRequest = await c.req.json();
+			logger.info({ direction: body.direction, songId: body.songId, songName: body.songName }, "track skipped");
+			await storer.upload(body);
+			return c.json({ ok: true });
+		} catch (err) {
+			logger.error({ err }, "failed to handle skip request");
+			return c.json({ ok: false }, 500);
+		}
+	};
 }
