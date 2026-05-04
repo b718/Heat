@@ -114,3 +114,4 @@ For more information, read the Bun API docs in `node_modules/bun-types/docs/**.m
 
 - For logging, always use `pino`.
 - When creating try-catches, always use `err` as the variable name for the error.
+- Always use `response` instead of `res` when naming API responses.
