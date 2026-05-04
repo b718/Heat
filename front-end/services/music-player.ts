@@ -1,6 +1,8 @@
 import { serverUrl, spotifyApiURL } from "@/consts/api";
 import { Directon } from "@heat/types";
 
+import Playlist from "./data/playlist.json";
+
 export async function skip(direction: Directon): Promise<void> {
 	await fetch(`${serverUrl}/skip`, {
 		method: "POST",
@@ -12,7 +14,7 @@ export async function skip(direction: Directon): Promise<void> {
 export async function loadPlaylist(deviceId: string, token: string): Promise<void> {
 	const playlist = {
 		//this is from spotify
-		uris: ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"],
+		uris: Playlist.songUris,
 		position_ms: 0,
 	};
 	await fetch(`${spotifyApiURL}/v1/me/player/play?device_id=${deviceId}`, {
