@@ -3,3 +3,12 @@ export interface AccessToken {
 }
 
 export type Directon = "forwards" | "backwards";
+
+export interface SkipRequest {
+	direction: Directon;
+	songId: string;
+	songName: string;
+	songArtists: { name: string }[];
+	currentTime: number;
+	duration: number;
+}
