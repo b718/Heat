@@ -2,10 +2,12 @@ export interface SpotifyTrack {
 	name: string;
 	artists: { name: string }[];
 	album: { images: { url: string }[] };
+	duration_ms: number;
 }
 
 export interface SpotifyPlayerState {
 	paused: boolean;
+	position: number;
 	track_window: { current_track: SpotifyTrack };
 }
 
@@ -15,6 +17,8 @@ export interface SpotifyPlayer {
 	togglePlay: () => Promise<void>;
 	previousTrack: () => Promise<void>;
 	nextTrack: () => Promise<void>;
+	seek: (positionMs: number) => Promise<void>;
+	setVolume: (volume: number) => Promise<void>;
 	addListener: (event: string, callback: (arg: any) => void) => void;
 	removeListener: (event: string) => void;
 }
