@@ -160,7 +160,21 @@ function SongControls({
 			>
 				{">>"}
 			</button>
-			<span className="text-xs text-zinc-400">Vol</span>
+			<svg
+				viewBox="0 0 16 16"
+				xmlns="http://www.w3.org/2000/svg"
+				aria-hidden="true"
+				className="h-4 w-4 text-zinc-400 shrink-0"
+			>
+				<path
+					d="M7.14645 1.85356C7.46143 1.53858 8 1.76167 8 2.20712V13.7929C8 14.2384 7.46143 14.4614 7.14645 14.1465L4 11H1.5C1.22386 11 1 10.7762 1 10.5V5.50001C1 5.22387 1.22386 5.00001 1.5 5.00001H4L7.14645 1.85356Z"
+					fill="currentColor"
+				/>
+				<path
+					d="M12 7.99999C12 9.48649 10.9189 10.7205 9.5 10.9585V5.04147C10.9189 5.27951 12 6.5135 12 7.99999Z"
+					fill="currentColor"
+				/>
+			</svg>
 			<input
 				type="range"
 				min={0}
