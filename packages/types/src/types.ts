@@ -12,3 +12,17 @@ export interface SkipRequest {
 	currentTime: number;
 	duration: number;
 }
+
+export interface Song {
+	id: string;
+	name: string;
+	genres: string[];
+	artists: string[];
+}
+
+export interface Artist {
+	id: string;
+	name: string;
+	genres: string[];
+	relatedArtists: string[];
+}
