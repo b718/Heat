@@ -1,0 +1,184 @@
+[
+  {
+    "name": "ISOxo",
+    "songGenres": [
+      "festival",
+      "dance",
+      "energetic"
+    ],
+    "artistGenres": [
+      "edm",
+      "dubstep",
+      "edm",
+      "edm",
+      "dubstep",
+      "festival"
+    ]
+  },
+  {
+    "name": "Lil Durk",
+    "songGenres": [
+      "aggressive",
+      "drill",
+      "memphis",
+      "trap"
+    ],
+    "artistGenres": [
+      "drill",
+      "melodic rap",
+      "drill",
+      "rap"
+    ]
+  },
+  {
+    "name": "ISOKNOCK",
+    "songGenres": [
+      "energetic",
+      "rave",
+      "dubstep",
+      "aggressive"
+    ],
+    "artistGenres": [
+      "edm",
+      "dubstep",
+      "festival",
+      "edm",
+      "dubstep",
+      "edm"
+    ]
+  },
+  {
+    "name": "King Von",
+    "songGenres": [
+      "story-telling",
+      "aggressive",
+      "chicago"
+    ],
+    "artistGenres": [
+      "drill",
+      "rap",
+      "uk drill",
+      "grime",
+      "drill",
+      "melodic rap"
+    ]
+  },
+  {
+    "name": "EsDeeKid",
+    "songGenres": [
+      "tik-tok",
+      "grime",
+      "uk-drill",
+      "trendy",
+      "energetic"
+    ],
+    "artistGenres": [
+      "uk drill",
+      "grime"
+    ]
+  },
+  {
+    "name": "Young Thug",
+    "songGenres": [
+      "trap",
+      "atlanta",
+      "tik-tok",
+      "energetic",
+      "fast"
+    ],
+    "artistGenres": [
+      "rap",
+      "melodic rap",
+      "experimental",
+      "rap",
+      "rap",
+      "trap"
+    ]
+  },
+  {
+    "name": "21 Savage",
+    "songGenres": [
+      "melodic",
+      "auto-tune",
+      "emotional",
+      "melancholic"
+    ],
+    "artistGenres": [
+      "rap",
+      "trap",
+      "rap",
+      "rap",
+      "melodic rap",
+      "experimental"
+    ]
+  },
+  {
+    "name": "Digga",
+    "songGenres": [
+      "trendy",
+      "drill",
+      "grime",
+      "first day-out"
+    ],
+    "artistGenres": [
+      "uk drill",
+      "grime",
+      "uk drill",
+      "mainstream",
+      "pop",
+      "drill",
+      "rap"
+    ]
+  },
+  {
+    "name": "Knock2",
+    "songGenres": [
+      "melodic",
+      "emotional",
+      "melancholic"
+    ],
+    "artistGenres": [
+      "edm",
+      "edm",
+      "dubstep",
+      "edm",
+      "dubstep",
+      "festival"
+    ]
+  },
+  {
+    "name": "Lil Baby",
+    "songGenres": [
+      "atlanta",
+      "trap",
+      "duo",
+      "energetic",
+      "melodic"
+    ],
+    "artistGenres": [
+      "rap",
+      "drill",
+      "rap",
+      "rap",
+      "melodic rap",
+      "experimental",
+      "rap",
+      "trap"
+    ]
+  },
+  {
+    "name": "Central Cee",
+    "songGenres": [
+      "chill",
+      "uk rap",
+      "trendy",
+      "tik-tok",
+      "melodic"
+    ],
+    "artistGenres": [
+      "uk drill",
+      "mainstream",
+      "pop"
+    ]
+  }
+]
