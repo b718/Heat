@@ -1,4 +1,5 @@
 mod postgres './justfiles/postgres.just'
+mod prisma './justfiles/prisma.just'
 
 default:
     @just --list
@@ -7,4 +8,5 @@ default:
 set-up-local-dev:
     @just postgres::start
     @sleep 1
+    @bun seed/seed.ts
     @bun run dev
