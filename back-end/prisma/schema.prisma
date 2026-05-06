@@ -15,9 +15,32 @@ datasource db {
 model Song {
   id String @id
   name String
-  artists String[]
+  genres String[]
 
+  // Relations
   skips Skip[]
+  artists Artist[]
+}
+
+model Artist {
+  id String @id
+  name String
+  genres String[]
+
+  // Relations
+  songs Song[]
+  relatedTo ArtistToArtist[] @relation("SourceArtist")
+  relatedFrom ArtistToArtist[] @relation("RelatedArtist")
+}
+
+model ArtistToArtist {
+  id String @id @default(uuid())
+  sourceArtistId String
+  relatedArtistId String
+
+  //Relations
+  source  Artist @relation("SourceArtist",  fields: [sourceArtistId],  references: [id])
+  related Artist @relation("RelatedArtist", fields: [relatedArtistId], references: [id])
 }
 
 model Skip {
