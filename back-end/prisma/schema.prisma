@@ -16,6 +16,7 @@ model Song {
   id String @id
   name String
   genres String[]
+  createdAt DateTime @default(now())
 
   // Relations
   skips Skip[]
@@ -26,6 +27,7 @@ model Artist {
   id String @id
   name String
   genres String[]
+  createdAt DateTime @default(now())
 
   // Relations
   songs Song[]
@@ -48,6 +50,7 @@ model Skip {
   direction String
   currentTime Int
   duration Int
+  createdAt DateTime @default(now())
 
   songId String
   song   Song @relation(fields: [songId], references: [id])
