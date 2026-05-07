@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import MusicPlayer from "@/components/MusicPlayer";
+import Player from "@/components/Player";
 import { fetchToken, loginUrl } from "@/services/auth";
 
 export default function Home() {
@@ -46,5 +46,5 @@ export default function Home() {
 		);
 	}
 
-	return <MusicPlayer token={token} />;
+	return <Player token={token} />;
 }

@@ -6,7 +6,7 @@ import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
 import { buildSkipRequest, skip } from "@/services/music-player";
 import type { SpotifyPlayer, SpotifyPlayerState, SpotifyTrack } from "@/types/spotify-sdk";
 
-export default function MusicPlayer({ token }: { token: string }) {
+export default function Player({ token }: { token: string }) {
 	const { playerRef, playerState, loading, error } = useSpotifyPlayer(token);
 	const [volume, setVolume] = useState(0);
 	const [position, setPosition] = useState(0);
