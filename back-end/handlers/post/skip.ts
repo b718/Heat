@@ -10,7 +10,10 @@ export function skip(storer: Storer) {
 	return async function (c: Context) {
 		try {
 			const body: SkipRequest = await c.req.json();
-			logger.info({ direction: body.direction, songId: body.songId, songName: body.songName }, "track skipped");
+			logger.info(
+				{ direction: body.direction, songId: body.songId, songName: body.songName },
+				"track skipped",
+			);
 			await storer.upload(body);
 			return c.json({ ok: true });
 		} catch (err) {
