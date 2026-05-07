@@ -16,7 +16,7 @@ export function skip(storer: Storer, parserTypeToParser: Map<string, Parser>) {
 				"track skipped",
 			);
 			const parsedData = getParser(body.parserType, parserTypeToParser).parse(body);
-			await storer.upload(parsedData);
+			await storer.store(parsedData);
 			return c.json({ ok: true });
 		} catch (err) {
 			logger.error({ err }, "failed to handle skip request");

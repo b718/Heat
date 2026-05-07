@@ -26,23 +26,23 @@ export class StorerPostgres implements Storer {
 		this.logger = getLogger().child({ storerType: this.storerType });
 	}
 
-	async upload(result: ParsedResult): Promise<void> {
+	async store(result: ParsedResult): Promise<void> {
 		try {
-			this.logger.info({ songId: result.song.id, songName: result.song.name }, "uploading request");
-			await this.insertNewSong(result.song);
-			await this.insertNewArtists(result.artists);
-			await this.insertNewSkip(result.skip);
-			this.logger.info({ songId: result.song.id, songName: result.song.name }, "uploaded request");
+			this.logger.info({ songId: result.song.id, songName: result.song.name }, "storing request");
+			await this.insertSong(result.song);
+			await this.insertArtists(result.artists);
+			await this.insertSkip(result.skip);
+			this.logger.info({ songId: result.song.id, songName: result.song.name }, "stored request");
 		} catch (err) {
 			this.logger.error(
 				{ err, songId: result.song.id, songName: result.song.name },
-				"failed to upload request",
+				"failed to store request",
 			);
 			throw new ErrorStorer(err);
 		}
 	}
 
-	private async insertNewSong(song: SongInformation): Promise<void> {
+	private async insertSong(song: SongInformation): Promise<void> {
 		this.logger.info({ id: song.id }, "creating song");
 		await this.client.song.upsert({
 			where: { id: song.id },
@@ -52,25 +52,25 @@ export class StorerPostgres implements Storer {
 		this.logger.info({ id: song.id }, "created song");
 	}
 
-	private async insertNewArtists(artists: ArtistInformation[]): Promise<void> {
+	private async insertArtists(artists: ArtistInformation[]): Promise<void> {
 		this.logger.info({ count: artists.length }, "creating artist(s)");
 		await Promise.all(
 			artists.map(async (artist) => {
+				const { relatedSongId, ...artistData } = artist;
 				await this.client.artist.upsert({
 					where: { id: artist.id },
-					update: { ...artist, songs: { connect: { id: artist.relatedSongId } } },
-					create: { ...artist, songs: { connect: { id: artist.relatedSongId } } },
+					update: { ...artistData, songs: { connect: { id: relatedSongId } } },
+					create: { ...artistData, songs: { connect: { id: relatedSongId } } },
 				});
 			}),
 		);
 		this.logger.info({ count: artists.length }, "created artist(s)");
 	}
 
-	private async insertNewSkip(skip: SkipInformation): Promise<void> {
-		this.logger.info({ songId: skip.relatedSongId, direction: skip.direction }, "creating skip");
-		await this.client.skip.create({
-			data: { ...skip, songId: skip.relatedSongId },
-		});
-		this.logger.info({ songId: skip.relatedSongId, direction: skip.direction }, "created skip");
+	private async insertSkip(skip: SkipInformation): Promise<void> {
+		const { relatedSongId, ...skipData } = skip;
+		this.logger.info({ songId: relatedSongId, direction: skip.direction }, "creating skip");
+		await this.client.skip.create({ data: { ...skipData, songId: relatedSongId } });
+		this.logger.info({ songId: relatedSongId, direction: skip.direction }, "created skip");
 	}
 }
