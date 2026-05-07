@@ -1,6 +1,6 @@
-import type { SkipRequest } from "@heat/types";
+import type { ParsedResult } from "@heat/types";
 
 export interface Storer {
 	readonly storerType: string;
-	upload(request: SkipRequest): Promise<void>;
+	upload(result: ParsedResult): Promise<void>;
 }

@@ -8,9 +8,13 @@ export interface SkipRequest {
 	direction: Directon;
 	songId: string;
 	songName: string;
-	songArtists: { name: string }[];
+	songArtists: {
+		providerId: string;
+		name: string;
+	}[];
 	currentTime: number;
 	duration: number;
+	parserType: string;
 }
 
 export interface Song {
@@ -26,3 +30,29 @@ export interface Artist {
 	genres: string[];
 	relatedArtists: string[];
 }
+
+export type ParsedResult = {
+	song: SongInformation;
+	artists: ArtistInformation[];
+	skip: SkipInformation;
+};
+
+export type SongInformation = {
+	id: string;
+	name: string;
+	genres: string[];
+};
+
+export type ArtistInformation = {
+	id: string;
+	name: string;
+	genres: string[];
+	relatedSongId: string;
+};
+
+export type SkipInformation = {
+	direction: Directon;
+	currentTime: number;
+	duration: number;
+	relatedSongId: string;
+};

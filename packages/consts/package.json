@@ -1,0 +1,9 @@
+{
+  "name": "@heat/consts",
+  "version": "1.0.0",
+  "module": "./src/consts.ts",
+  "types": "./src/consts.ts",
+  "exports": {
+    ".": "./src/consts.ts"
+  }
+}
