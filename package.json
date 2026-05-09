@@ -14,7 +14,8 @@
   "workspaces": [
     "front-end",
     "back-end",
-    "packages/*"
+    "packages/*",
+    "machine-learning-sandbox/*"
   ],
   "dependencies": {
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",

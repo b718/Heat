@@ -18,6 +18,7 @@
     "back-end": {
       "name": "back-end",
       "dependencies": {
+        "@heat/consts": "workspace:*",
         "@heat/types": "workspace:*",
         "@prisma/adapter-pg": "^7.8.0",
         "@prisma/client": "^7.8.0",
@@ -39,6 +40,7 @@
       "name": "front-end",
       "version": "0.1.0",
       "dependencies": {
+        "@heat/consts": "workspace:*",
         "@heat/types": "workspace:*",
         "next": "16.2.4",
         "react": "19.2.4",
@@ -54,6 +56,22 @@
         "tailwindcss": "^4",
         "typescript": "^5",
       },
+    },
+    "machine-learning-sandbox/typescript": {
+      "name": "machine-learning-sandbox",
+      "dependencies": {
+        "@heat/types": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/bun": "latest",
+      },
+      "peerDependencies": {
+        "typescript": "^5",
+      },
+    },
+    "packages/consts": {
+      "name": "@heat/consts",
+      "version": "1.0.0",
     },
     "packages/types": {
       "name": "@heat/types",
@@ -128,6 +146,8 @@
     "@eslint/object-schema": ["@eslint/object-schema@2.1.7", "", {}, "sha512-VtAOaymWVfZcmZbp6E2mympDIHvyjXs/12LqWYjVw6qjrfF+VK+fyG33kChz3nnK+SU5/NeHOqrTEHS8sXO3OA=="],
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
+
+    "@heat/consts": ["@heat/consts@workspace:packages/consts"],
 
     "@heat/types": ["@heat/types@workspace:packages/types"],
 
@@ -826,6 +846,8 @@
     "lru-cache": ["lru-cache@5.1.1", "", { "dependencies": { "yallist": "^3.0.2" } }, "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="],
 
     "lru.min": ["lru.min@1.1.4", "", {}, "sha512-DqC6n3QQ77zdFpCMASA1a3Jlb64Hv2N2DciFGkO/4L9+q/IpIAuRlKOvCXabtRW6cQf8usbmM6BE/TOPysCdIA=="],
+
+    "machine-learning-sandbox": ["machine-learning-sandbox@workspace:machine-learning-sandbox/typescript"],
 
     "magic-string": ["magic-string@0.30.21", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.5" } }, "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="],
 
