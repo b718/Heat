@@ -19,8 +19,19 @@ model Song {
   createdAt DateTime @default(now())
 
   // Relations
-  skips   Skip[]
-  artists Artist[]
+  skips           Skip[]
+  artists         Artist[]
+  songGenreLabels SongGenreLabel[]
+}
+
+model SongGenreLabel {
+  id             String   @id @default(uuid())
+  labelledGenres String[]
+  createdAt      DateTime @default(now())
+
+  // Relations
+  songId String
+  song   Song   @relation(fields: [songId], references: [id])
 }
 
 model Artist {
@@ -30,9 +41,20 @@ model Artist {
   createdAt DateTime @default(now())
 
   // Relations
-  songs       Song[]
-  relatedTo   ArtistToArtist[] @relation("SourceArtist")
-  relatedFrom ArtistToArtist[] @relation("RelatedArtist")
+  songs             Song[]
+  relatedTo         ArtistToArtist[]   @relation("SourceArtist")
+  relatedFrom       ArtistToArtist[]   @relation("RelatedArtist")
+  artistGenreLabels ArtistGenreLabel[]
+}
+
+model ArtistGenreLabel {
+  id             String   @id @default(uuid())
+  labelledGenres String[]
+  createdAt      DateTime @default(now())
+
+  // Relations
+  artistId String
+  artist   Artist @relation(fields: [artistId], references: [id])
 }
 
 model ArtistToArtist {
