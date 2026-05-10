@@ -23,6 +23,7 @@ export interface SpotifyPlayer {
 	connect: () => Promise<boolean>;
 	disconnect: () => void;
 	togglePlay: () => Promise<void>;
+	pause: () => Promise<void>;
 	previousTrack: () => Promise<void>;
 	nextTrack: () => Promise<void>;
 	seek: (positionMs: number) => Promise<void>;
