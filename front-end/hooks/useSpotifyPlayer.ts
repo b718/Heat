@@ -2,27 +2,31 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { loadPlaylist } from "@/services/music-player";
 import type { SpotifyPlayer, SpotifyPlayerState } from "@/types/spotify-sdk";
 
 export function useSpotifyPlayer(token: string) {
 	const playerRef = useRef<SpotifyPlayer | null>(null);
 	const [playerState, setPlayerState] = useState<SpotifyPlayerState | null>(null);
+	const [deviceId, setDeviceId] = useState<string | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
+		if (!token) return;
+
 		window.onSpotifyWebPlaybackSDKReady = () => {
 			const player = new window.Spotify.Player({
 				name: "Heat (Playback)",
 				getOAuthToken: (cb) => cb(token),
-				volume: 0,
+				volume: 0.5,
 			});
 			player.addListener("initialization_error", ({ message }) => setError(message));
 			player.addListener("authentication_error", ({ message }) => setError(message));
-			player.addListener("player_state_changed", (state) => setPlayerState(state));
-			player.addListener("ready", async ({ device_id: deviceId }) => {
-				await loadPlaylist(deviceId, token);
+			player.addListener("player_state_changed", (state) => {
+				setPlayerState(state);
+			});
+			player.addListener("ready", ({ device_id }) => {
+				setDeviceId(device_id);
 				setLoading(false);
 			});
 			player.connect().then((success) => {
@@ -49,5 +53,9 @@ export function useSpotifyPlayer(token: string) {
 		};
 	}, [token]);
 
-	return { playerRef, playerState, loading, error };
+	function pause() {
+		playerRef.current?.pause();
+	}
+
+	return { playerRef, deviceId, playerState, loading, error, pause };
 }
