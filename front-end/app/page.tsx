@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import Player from "@/components/Player";
+import GenreGame from "@/components/genre-labelling/GenreGame";
 import { fetchToken, loginUrl } from "@/services/auth";
 
 export default function Home() {
@@ -46,5 +46,5 @@ export default function Home() {
 		);
 	}
 
-	return <Player token={token} />;
+	return <GenreGame token={token} />;
 }
