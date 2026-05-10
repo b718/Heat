@@ -1,9 +1,7 @@
 import { serverUrl, spotifyApiURL } from "@/consts/api";
 import { SpotifyTrack } from "@/types/spotify-sdk";
 import { PARSER_SPOTIFY_TYPE } from "@heat/consts";
-import { Directon, SkipRequest } from "@heat/types";
-
-import Playlist from "./data/playlist.json";
+import { ArtistQueryResponse, Directon, GetArtistResponse, SkipRequest } from "@heat/types";
 
 export function buildSkipRequest(
 	direction: Directon,
@@ -29,18 +27,40 @@ export async function skip(request: SkipRequest): Promise<void> {
 	});
 }
 
-export async function loadPlaylist(deviceId: string, token: string): Promise<void> {
-	const playlist = {
-		//this is from spotify
-		uris: Playlist.songUris,
-		position_ms: 0,
-	};
+export async function playTrack(deviceId: string, trackId: string, token: string): Promise<void> {
 	await fetch(`${spotifyApiURL}/v1/me/player/play?device_id=${deviceId}`, {
+		method: "PUT",
 		headers: {
 			Authorization: `Bearer ${token}`,
 			"Content-Type": "application/json",
 		},
-		method: "PUT",
-		body: JSON.stringify(playlist),
+		body: JSON.stringify({ uris: [`spotify:track:${trackId}`] }),
 	});
+}
+
+export async function getArtist(artistId: string, token: string): Promise<GetArtistResponse> {
+	const response = await fetch(`${spotifyApiURL}/v1/artists/${artistId}`, {
+		headers: { Authorization: `Bearer ${token}` },
+	});
+	return await response.json();
+}
+
+export async function playArtistTopTrack(
+	deviceId: string,
+	artistName: string,
+	token: string,
+): Promise<void> {
+	const queryParams = new URLSearchParams({
+		q: artistName,
+		type: "track",
+		limit: "1",
+	});
+	const response = await fetch(`${spotifyApiURL}/v1/search?${queryParams.toString()}`, {
+		headers: { Authorization: `Bearer ${token}` },
+	});
+	const deserializedResponse: ArtistQueryResponse = await response.json();
+	const trackId = deserializedResponse.tracks.items.at(0)?.id;
+	if (!trackId) throw new Error("unable to load artist data");
+
+	await playTrack(deviceId, trackId, token);
 }
