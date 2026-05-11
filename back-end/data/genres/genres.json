@@ -1,0 +1,278 @@
+{
+    "pop": {
+        "subgenres": [
+            {
+                "name": "Synth-Pop",
+                "artistExamples": [
+                    "The Weeknd",
+                    "Dua Lipa",
+                    "CHVRCHES"
+                ]
+            },
+            {
+                "name": "Dance-Pop",
+                "artistExamples": [
+                    "Taylor Swift",
+                    "Ariana Grande",
+                    "Katy Perry"
+                ]
+            },
+            {
+                "name": "Indie Pop",
+                "artistExamples": [
+                    "Lorde",
+                    "Lana Del Rey",
+                    "Phoebe Bridgers"
+                ]
+            },
+            {
+                "name": "Teen Pop",
+                "artistExamples": [
+                    "Justin Bieber",
+                    "Olivia Rodrigo",
+                    "Selena Gomez"
+                ]
+            },
+            {
+                "name": "Art Pop",
+                "artistExamples": [
+                    "Billie Eilish",
+                    "FKA twigs",
+                    "St. Vincent"
+                ]
+            },
+            {
+                "name": "Bedroom Pop",
+                "artistExamples": [
+                    "Clairo",
+                    "Cuco",
+                    "Boy Pablo"
+                ]
+            },
+            {
+                "name": "Hyperpop",
+                "artistExamples": [
+                    "100 gecs",
+                    "SOPHIE",
+                    "Charli XCX"
+                ]
+            }
+        ]
+    },
+    "hip-hop/rap": {
+        "subgenres": [
+            {
+                "name": "Trap",
+                "artistExamples": [
+                    "Future",
+                    "Migos",
+                    "Travis Scott"
+                ]
+            },
+            {
+                "name": "Mumble Rap",
+                "artistExamples": [
+                    "Lil Uzi Vert",
+                    "Playboi Carti",
+                    "Young Thug"
+                ]
+            },
+            {
+                "name": "Drill",
+                "artistExamples": [
+                    "Pop Smoke",
+                    "Chief Keef",
+                    "Central Cee"
+                ]
+            },
+            {
+                "name": "Conscious Hip-Hop",
+                "artistExamples": [
+                    "Kendrick Lamar",
+                    "J. Cole",
+                    "Common"
+                ]
+            },
+            {
+                "name": "Emo Rap",
+                "artistExamples": [
+                    "Juice WRLD",
+                    "Lil Peep",
+                    "XXXTentacion"
+                ]
+            },
+            {
+                "name": "Experimental Rap",
+                "artistExamples": [
+                    "Death Grips",
+                    "JPEGMAFIA",
+                    "Tyler, The Creator"
+                ]
+            },
+            {
+                "name": "Melodic Rap",
+                "artistExamples": [
+                    "A Boogie Wit da Hoodie",
+                    "Gunna",
+                    "Lil Durk"
+                ]
+            }
+        ]
+    },
+    "r&b": {
+        "subgenres": [
+            {
+                "name": "Contemporary R&B",
+                "artistExamples": [
+                    "Beyoncé",
+                    "Chris Brown",
+                    "Usher"
+                ]
+            },
+            {
+                "name": "Alternative R&B",
+                "artistExamples": [
+                    "Frank Ocean",
+                    "The Weeknd",
+                    "SZA"
+                ]
+            },
+            {
+                "name": "PBR&B",
+                "artistExamples": [
+                    "Miguel",
+                    "Jhené Aiko",
+                    "How to Dress Well"
+                ]
+            },
+            {
+                "name": "Funk R&B",
+                "artistExamples": [
+                    "Bruno Mars",
+                    "Anderson .Paak",
+                    "Janelle Monáe"
+                ]
+            },
+            {
+                "name": "Trap Soul",
+                "artistExamples": [
+                    "Bryson Tiller",
+                    "6LACK",
+                    "Tory Lanez"
+                ]
+            },
+            {
+                "name": "Indie R&B",
+                "artistExamples": [
+                    "Daniel Caesar",
+                    "Steve Lacy",
+                    "Snoh Aalegra"
+                ]
+            }
+        ]
+    },
+    "electronic/edm": {
+        "subgenres": [
+            {
+                "name": "House",
+                "artistExamples": [
+                    "Matrix Garrix",
+                    "Calvin Harris",
+                    "Daft Punk"
+                ]
+            },
+            {
+                "name": "Techno",
+                "artistExamples": [
+                    "Charlotte de Witte",
+                    "Carl Cox",
+                    "Amelie Lens"
+                ]
+            },
+            {
+                "name": "Dubstep",
+                "artistExamples": [
+                    "Skrillex",
+                    "Excision",
+                    "ISOxo"
+                ]
+            },
+            {
+                "name": "Drum and Bass",
+                "artistExamples": [
+                    "Pendulum",
+                    "Sub Focus",
+                    "Chase & Status"
+                ]
+            },
+            {
+                "name": "Trance",
+                "artistExamples": [
+                    "Armin van Buuren",
+                    "Above & Beyond",
+                    "Tiësto"
+                ]
+            },
+            {
+                "name": "Future Bass",
+                "artistExamples": [
+                    "Flume",
+                    "Illenium",
+                    "Marshmello"
+                ]
+            }
+        ]
+    },
+    "k-pop": {
+        "subgenres": [
+            {
+                "name": "K-Pop Dance",
+                "artistExamples": [
+                    "BTS",
+                    "BLACKPINK",
+                    "TWICE"
+                ]
+            },
+            {
+                "name": "K-Hip-Hop",
+                "artistExamples": [
+                    "Zico",
+                    "Jay Park",
+                    "Epik High"
+                ]
+            },
+            {
+                "name": "K-R&B",
+                "artistExamples": [
+                    "DEAN",
+                    "Crush",
+                    "Heize"
+                ]
+            },
+            {
+                "name": "K-Indie",
+                "artistExamples": [
+                    "Hyukoh",
+                    "Jannabi",
+                    "Se So Neon"
+                ]
+            },
+            {
+                "name": "Girl Group Pop",
+                "artistExamples": [
+                    "NewJeans",
+                    "aespa",
+                    "(G)I-DLE"
+                ]
+            },
+            {
+                "name": "Boy Group Pop",
+                "artistExamples": [
+                    "Stray Kids",
+                    "SEVENTEEN",
+                    "TXT"
+                ]
+            }
+        ]
+    }
+}
