@@ -29,7 +29,7 @@ export default function PlayerControls({
 		<div className="flex w-full items-center gap-2">
 			<button
 				onClick={() => player?.togglePlay()}
-				className="flex-1 rounded-full bg-green-500 py-2 text-sm font-bold hover:bg-green-400 transition-colors"
+				className="flex-1 rounded-full bg-green-500 py-2 text-sm font-bold hover:bg-green-400 transition-colors cursor-pointer"
 			>
 				{paused ? "▶" : "⏸"}
 			</button>
