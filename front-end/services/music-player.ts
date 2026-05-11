@@ -1,10 +1,10 @@
 import { serverUrl, spotifyApiURL } from "@/consts/api";
 import { SpotifyTrack } from "@/types/spotify-sdk";
 import { PARSER_SPOTIFY_TYPE } from "@heat/consts";
-import { ArtistQueryResponse, Directon, GetArtistResponse, SkipRequest } from "@heat/types";
+import { ArtistQueryResponse, Direction, GetArtistResponse, SkipRequest } from "@heat/types";
 
 export function buildSkipRequest(
-	direction: Directon,
+	direction: Direction,
 	currentTrack: SpotifyTrack,
 	position: number,
 ): SkipRequest {
