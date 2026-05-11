@@ -25,7 +25,7 @@ export default function GenreSelector({
 				<div key={genre}>
 					<button
 						onClick={() => handleGenreClick(genre)}
-						className={`w-full text-left px-4 py-2 rounded-lg font-semibold capitalize transition-colors ${
+						className={`w-full text-left px-4 py-2 rounded-lg font-semibold capitalize transition-colors cursor-pointer ${
 							expandedGenre === genre
 								? "bg-green-500 text-black"
 								: "bg-zinc-800 text-white hover:bg-zinc-700"
@@ -39,7 +39,7 @@ export default function GenreSelector({
 								<button
 									key={subgenre.name}
 									onClick={() => handleSubGenreClick({ genre: genre, subgenre: subgenre.name })}
-									className={`px-3 py-2 rounded-lg text-sm transition-colors text-left ${
+									className={`px-3 py-2 rounded-lg text-sm transition-colors text-left cursor-pointer ${
 										selectedSubGenres.some((selectedSubgenre) =>
 											sameGenre(selectedSubgenre, { genre: genre, subgenre: subgenre.name }),
 										)
@@ -75,7 +75,7 @@ function SelectedSubGenres({
 				{selectedSubGenres.length > 0 && (
 					<button
 						onClick={onReset}
-						className="text-xs text-zinc-500 hover:text-red-400 transition-colors"
+						className="text-xs text-zinc-500 hover:text-red-400 transition-colors cursor-pointer"
 					>
 						Reset all
 					</button>
