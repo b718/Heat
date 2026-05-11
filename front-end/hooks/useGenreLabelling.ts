@@ -57,9 +57,17 @@ export function useGenreLabelling() {
 		setSubmitting(true);
 		try {
 			if (currentItem.type === "song") {
-				await labelSong({ songId: currentItem.data.id, genres: selectedSubGenres });
+				await labelSong({
+					songId: currentItem.data.id,
+					songName: currentItem.data.name,
+					genres: selectedSubGenres,
+				});
 			} else {
-				await labelArtist({ artistId: currentItem.data.id, genres: selectedSubGenres });
+				await labelArtist({
+					artistId: currentItem.data.id,
+					artistName: currentItem.data.name,
+					genres: selectedSubGenres,
+				});
 			}
 			setCurrentIndex((i) => i + 1);
 			setSelectedSubGenres([]);
