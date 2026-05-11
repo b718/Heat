@@ -56,3 +56,44 @@ export type SkipInformation = {
 	duration: number;
 	relatedSongId: string;
 };
+
+export type Genres = Record<string, { subgenres: Array<{ name: string; artistExamples: string[] }> }>;
+
+export interface SongForLabelling {
+	id: string;
+	name: string;
+}
+
+export interface ArtistForLabelling {
+	id: string;
+	name: string;
+}
+
+export interface UnlabelledItemsResponse {
+	songs: SongForLabelling[];
+	artists: ArtistForLabelling[];
+}
+
+export interface LabelSongRequest {
+	songId: string;
+	genres: Genre[];
+}
+
+export interface LabelArtistRequest {
+	artistId: string;
+	genres: Genre[];
+}
+
+export interface Genre {
+	genre: string;
+	subgenre: string;
+}
+
+export interface GetArtistResponse {
+	name: string;
+	images: { url: string }[];
+}
+
+export interface ArtistQueryResponse {
+	tracks: { items: { id: string }[] };
+}
