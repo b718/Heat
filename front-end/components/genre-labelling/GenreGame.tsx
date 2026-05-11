@@ -26,12 +26,14 @@ export default function GenreGame({ token }: { token: string }) {
 		selectedSubGenres,
 		expandedGenre,
 		submitting,
+		failedAttempts,
 		loading: genreLabellingLoading,
 		error: genreLabellingError,
 		isComplete,
 		handleGenreClick,
 		handleSubGenreClick,
 		handleSubmit,
+		handleSkip,
 		handleResetSubGenres,
 	} = useGenreLabelling();
 
@@ -101,7 +103,13 @@ export default function GenreGame({ token }: { token: string }) {
 					pausePlayer={pause}
 				/>
 			)}
-			<div className="flex w-full max-w-lg flex-col gap-6">
+			<div className="flex w-full max-w-lg flex-col gap-4">
+				{failedAttempts > 0 && (
+					<p className="text-red-400 text-sm text-center">
+						Couldn't save submission (attempt {failedAttempts}). Please try again.
+					</p>
+				)}
+
 				<GenreSelector
 					genres={genres}
 					selectedSubGenres={selectedSubGenres}
@@ -110,12 +118,21 @@ export default function GenreGame({ token }: { token: string }) {
 					handleSubGenreClick={handleSubGenreClick}
 					handleResetSubGenres={handleResetSubGenres}
 				/>
+
+				{failedAttempts >= 3 && (
+					<button
+						onClick={handleSkip}
+						className="rounded-full bg-zinc-800 py-2 text-sm text-zinc-300 hover:bg-zinc-700 transition-colors"
+					>
+						Skip this item
+					</button>
+				)}
 				<button
 					onClick={handleSubmit}
 					disabled={selectedSubGenres.length === 0 || submitting}
-					className="rounded-full bg-green-500 py-3 mb-4 text-sm font-bold text-black hover:bg-green-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+					className="rounded-full bg-green-500 py-3 mb-4 text-sm font-bold text-black hover:bg-green-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
 				>
-					{submitting ? "Saving..." : "Save Label"}
+					{submitting ? "Saving..." : failedAttempts > 0 ? "Retry" : "Save Label"}
 				</button>
 			</div>
 		</div>
