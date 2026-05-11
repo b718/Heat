@@ -2,10 +2,10 @@ export interface AccessToken {
 	access_token?: string;
 }
 
-export type Directon = "forwards" | "backwards";
+export type Direction = "forwards" | "backwards";
 
 export interface SkipRequest {
-	direction: Directon;
+	direction: Direction;
 	songId: string;
 	songName: string;
 	songArtists: {
@@ -51,7 +51,7 @@ export type ArtistInformation = {
 };
 
 export type SkipInformation = {
-	direction: Directon;
+	direction: Direction;
 	currentTime: number;
 	duration: number;
 	relatedSongId: string;
@@ -76,11 +76,13 @@ export interface UnlabelledItemsResponse {
 
 export interface LabelSongRequest {
 	songId: string;
+	songName: string;
 	genres: Genre[];
 }
 
 export interface LabelArtistRequest {
 	artistId: string;
+	artistName: string;
 	genres: Genre[];
 }
 
