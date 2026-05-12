@@ -22,9 +22,7 @@ export function useSpotifyPlayer(token: string) {
 			});
 			player.addListener("initialization_error", ({ message }) => setError(message));
 			player.addListener("authentication_error", ({ message }) => setError(message));
-			player.addListener("player_state_changed", (state) => {
-				setPlayerState(state);
-			});
+			player.addListener("player_state_changed", (state) => setPlayerState(state));
 			player.addListener("ready", ({ device_id }) => {
 				setDeviceId(device_id);
 				setLoading(false);
