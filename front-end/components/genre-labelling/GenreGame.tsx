@@ -90,11 +90,11 @@ export default function GenreGame({ token }: { token: string }) {
 	if (isComplete || items.length === 0) {
 		return (
 			<div className="flex min-h-screen flex-col items-center justify-center bg-black text-white gap-4">
-				{items.length !== 0 && <p className="text-2xl font-bold text-green-500">Session complete!</p>}
+				{items.length !== 0 && <p className="text-2xl font-bold text-green-500">Thanks for playing!</p>}
 				<p className="text-zinc-400">
 					{items.length === 0
-						? "No songs/artists to label for now :)"
-						: `You labelled ${items.length} items.`}
+						? "No songs/artists to guess right now, check back soon :)"
+						: `You guessed the genre of ${items.length} songs/artists.`}
 				</p>
 				<Link
 					href="/"
