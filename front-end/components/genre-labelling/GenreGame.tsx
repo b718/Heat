@@ -3,6 +3,8 @@
 import Link from "next/link";
 
 import { useGenreLabelling } from "@/hooks/useGenreLabelling";
+import { usePlaybackPosition } from "@/hooks/usePlaybackPosition";
+import { useRecordingSkip } from "@/hooks/useRecordingSkip";
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
 
 import ArtistPlayer from "../player/ArtistPlayer";
@@ -18,6 +20,7 @@ export default function GenreGame({ token }: { token: string }) {
 		error: spotifyPlayerError,
 		pause,
 	} = useSpotifyPlayer(token);
+	const { position, setPosition } = usePlaybackPosition(playerState);
 	const {
 		items,
 		genres,
@@ -25,17 +28,40 @@ export default function GenreGame({ token }: { token: string }) {
 		currentIndex,
 		selectedSubGenres,
 		expandedGenre,
-		submitting,
-		failedAttempts,
+		submitting: submittingLabel,
+		failedAttempts: labelFailedAttempts,
 		loading: genreLabellingLoading,
 		error: genreLabellingError,
 		isComplete,
+		submit: submitLabel,
+		next,
+		reset: resetLabelFailedAttempts,
 		handleGenreClick,
 		handleSubGenreClick,
-		handleSubmit,
-		handleSkip,
 		handleResetSubGenres,
 	} = useGenreLabelling();
+	const {
+		submitting: submittingSkip,
+		failedAttempts: skipFailedAttempts,
+		submit: submitSkip,
+		reset: resetSkipFailedAttempts,
+	} = useRecordingSkip();
+	const totalFailedAttempts = labelFailedAttempts + skipFailedAttempts;
+
+	async function onSubmit() {
+		if (!playerState) return;
+		await Promise.all([
+			submitLabel(),
+			submitSkip("forwards", playerState.track_window.current_track, position),
+		]);
+		next();
+	}
+
+	function onSkip() {
+		next();
+		resetLabelFailedAttempts();
+		resetSkipFailedAttempts();
+	}
 
 	if (genreLabellingLoading || spotifyPlayerLoading) {
 		return (
@@ -91,6 +117,8 @@ export default function GenreGame({ token }: { token: string }) {
 					trackId={currentItem.data.id}
 					playerRef={playerRef}
 					playerState={playerState}
+					position={position}
+					setPosition={setPosition}
 				/>
 			) : (
 				<ArtistPlayer
@@ -101,12 +129,14 @@ export default function GenreGame({ token }: { token: string }) {
 					playerRef={playerRef}
 					playerState={playerState}
 					pausePlayer={pause}
+					position={position}
+					setPosition={setPosition}
 				/>
 			)}
 			<div className="flex w-full max-w-lg flex-col gap-4">
-				{failedAttempts > 0 && (
+				{totalFailedAttempts > 0 && (
 					<p className="text-red-400 text-sm text-center">
-						Couldn't save submission (attempt {failedAttempts}). Please try again.
+						Couldn't save submission (attempt {totalFailedAttempts}). Please try again.
 					</p>
 				)}
 
@@ -119,20 +149,24 @@ export default function GenreGame({ token }: { token: string }) {
 					handleResetSubGenres={handleResetSubGenres}
 				/>
 
-				{failedAttempts >= 3 && (
+				{totalFailedAttempts >= 3 && (
 					<button
-						onClick={handleSkip}
+						onClick={onSkip}
 						className="rounded-full bg-zinc-800 py-2 text-sm text-zinc-300 hover:bg-zinc-700 transition-colors"
 					>
 						Skip this item
 					</button>
 				)}
 				<button
-					onClick={handleSubmit}
-					disabled={selectedSubGenres.length === 0 || submitting}
+					onClick={onSubmit}
+					disabled={selectedSubGenres.length === 0 || submittingLabel || submittingSkip}
 					className="rounded-full bg-green-500 py-3 mb-4 text-sm font-bold text-black hover:bg-green-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
 				>
-					{submitting ? "Saving..." : failedAttempts > 0 ? "Retry" : "Save Label"}
+					{submittingLabel || submittingSkip
+						? "Saving..."
+						: totalFailedAttempts > 0
+							? "Retry"
+							: "Save Label"}
 				</button>
 			</div>
 		</div>

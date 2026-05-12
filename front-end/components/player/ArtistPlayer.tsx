@@ -17,6 +17,8 @@ interface Props {
 	playerRef: RefObject<SpotifyPlayer | null>;
 	playerState: SpotifyPlayerState | null;
 	pausePlayer: () => void;
+	position: number;
+	setPosition: (value: number | ((prev: number) => number)) => void;
 }
 
 export default function ArtistPlayer({
@@ -27,20 +29,13 @@ export default function ArtistPlayer({
 	playerRef,
 	playerState,
 	pausePlayer,
+	position,
+	setPosition,
 }: Props) {
 	const [volume, setVolume] = useState(0.5);
-	const [position, setPosition] = useState(0);
 	const [artistInfo, setArtistInfo] = useState<GetArtistResponse | null>(null);
 	const [artistLoading, setArtistLoading] = useState(true);
 	const [artistError, setArtistError] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (!playerState) return;
-		setPosition(playerState.position);
-		if (playerState.paused) return;
-		const interval = setInterval(() => setPosition((prev) => prev + 1000), 1000);
-		return () => clearInterval(interval);
-	}, [playerState]);
 
 	useEffect(() => {
 		if (!deviceId) return;

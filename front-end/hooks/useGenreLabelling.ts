@@ -52,7 +52,7 @@ export function useGenreLabelling() {
 		setSelectedSubGenres([]);
 	}
 
-	async function handleSubmit() {
+	async function submit() {
 		if (!currentItem || selectedSubGenres.length === 0 || submitting) return;
 		setSubmitting(true);
 		try {
@@ -69,21 +69,22 @@ export function useGenreLabelling() {
 					genres: selectedSubGenres,
 				});
 			}
-			setCurrentIndex((i) => i + 1);
-			setSelectedSubGenres([]);
-			setExpandedGenre(null);
 			setFailedAttempts(0);
-		} catch {
+		} catch (err) {
 			setFailedAttempts((n) => n + 1);
+			throw err;
 		} finally {
 			setSubmitting(false);
 		}
 	}
 
-	function handleSkip() {
+	function next() {
 		setCurrentIndex((i) => i + 1);
 		setSelectedSubGenres([]);
 		setExpandedGenre(null);
+	}
+
+	function reset() {
 		setFailedAttempts(0);
 	}
 
@@ -99,10 +100,11 @@ export function useGenreLabelling() {
 		loading,
 		error,
 		isComplete,
+		submit,
+		next,
+		reset,
 		handleGenreClick,
 		handleSubGenreClick,
-		handleSubmit,
-		handleSkip,
 		handleResetSubGenres,
 	};
 }
