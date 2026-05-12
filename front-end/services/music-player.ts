@@ -20,11 +20,12 @@ export function buildSkipRequest(
 }
 
 export async function skip(request: SkipRequest): Promise<void> {
-	await fetch(`${serverUrl}/skip`, {
+	const response = await fetch(`${serverUrl}/skip`, {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(request),
 	});
+	if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 }
 
 export async function playTrack(deviceId: string, trackId: string, token: string): Promise<void> {
