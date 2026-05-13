@@ -1,40 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { fetchGenres, fetchLabelItems, labelArtist, labelSong } from "@/services/genre-labelling";
 import type { ArtistForLabelling, Genre, Genres, SongForLabelling } from "@heat/types";
+import useSWR from "swr";
 
 type LabelItem = { type: "song"; data: SongForLabelling } | { type: "artist"; data: ArtistForLabelling };
 
 export function useGenreLabelling() {
-	const [items, setItems] = useState<LabelItem[]>([]);
-	const [genres, setGenres] = useState<Genres>({});
+	const { data, error, isLoading } = useSWR("genre-labelling-session", fetchLabellingSession, {
+		revalidateOnFocus: false,
+		fallbackData: { items: [], genres: {} },
+	});
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [selectedSubGenres, setSelectedSubGenres] = useState<Genre[]>([]);
 	const [expandedGenre, setExpandedGenre] = useState<string | null>(null);
 	const [submitting, setSubmitting] = useState(false);
 	const [failedAttempts, setFailedAttempts] = useState(0);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		Promise.all([fetchLabelItems(), fetchGenres()])
-			.then(([labelItems, genreData]) => {
-				const songs: LabelItem[] = labelItems.songs.map((song) => ({ type: "song", data: song }));
-				const artists: LabelItem[] = labelItems.artists.map((artist) => ({
-					type: "artist",
-					data: artist,
-				}));
-				setItems([...songs, ...artists]);
-				setGenres(genreData);
-			})
-			.catch(() => setError("Failed to load labelling session."))
-			.finally(() => setLoading(false));
-	}, []);
-
-	const currentItem = items[currentIndex] ?? null;
-	const isComplete = !loading && currentIndex >= items.length;
+	const currentItem = data.items[currentIndex] ?? null;
+	const isComplete = !isLoading && currentIndex >= data.items.length;
 
 	function handleGenreClick(genre: string) {
 		setExpandedGenre((prev) => (prev === genre ? null : genre));
@@ -89,16 +74,16 @@ export function useGenreLabelling() {
 	}
 
 	return {
-		items,
-		genres,
+		items: data.items,
+		genres: data.genres,
 		currentItem,
 		currentIndex,
 		selectedSubGenres,
 		expandedGenre,
 		submitting,
 		failedAttempts,
-		loading,
-		error,
+		loading: isLoading,
+		error: error ? "Failed to load labelling session." : null,
 		isComplete,
 		submit,
 		next,
@@ -111,4 +96,13 @@ export function useGenreLabelling() {
 
 export function sameGenre(genreOne: Genre, genreTwo: Genre) {
 	return genreOne.genre === genreTwo.genre && genreOne.subgenre === genreTwo.subgenre;
+}
+
+async function fetchLabellingSession(): Promise<{ items: LabelItem[]; genres: Genres }> {
+	const [labelItems, genreData] = await Promise.all([fetchLabelItems(), fetchGenres()]);
+	const songs: LabelItem[] = labelItems.songs.map((song) => ({ type: "song", data: song }));
+	const artists: LabelItem[] = labelItems.artists.map((artist) => ({ type: "artist", data: artist }));
+	const items = songs.length === 0 && artists.length === 0 ? [] : [...songs, ...artists];
+	const genres = genreData ?? {};
+	return { items, genres };
 }
