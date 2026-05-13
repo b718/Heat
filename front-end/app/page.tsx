@@ -1,21 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import GenreGame from "@/components/genre-labelling/GenreGame";
-import { fetchToken, loginUrl } from "@/services/auth";
+import { useToken } from "@/hooks/useToken";
+import { loginUrl } from "@/services/auth";
 
 export default function Home() {
-	const [token, setToken] = useState("");
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		fetchToken()
-			.then(setToken)
-			.catch(() => setError("Failed to load authentication token."))
-			.finally(() => setLoading(false));
-	}, []);
+	const { data: token, error, isLoading: loading } = useToken();
 
 	if (loading) {
 		return (
@@ -28,7 +18,7 @@ export default function Home() {
 	if (error) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-black">
-				<p className="text-red-400">{error}</p>
+				<p className="text-red-400">{error.message}</p>
 			</div>
 		);
 	}
