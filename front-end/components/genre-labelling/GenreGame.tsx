@@ -166,7 +166,7 @@ export default function GenreGame({ token }: { token: string }) {
 						? "Saving..."
 						: totalFailedAttempts > 0
 							? "Retry"
-							: "Save Label"}
+							: "Save Guess"}
 				</button>
 			</div>
 		</div>
