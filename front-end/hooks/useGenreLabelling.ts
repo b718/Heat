@@ -6,7 +6,9 @@ import { fetchGenres, fetchLabelItems, labelArtist, labelSong } from "@/services
 import type { ArtistForLabelling, Genre, Genres, SongForLabelling } from "@heat/types";
 import useSWR from "swr";
 
-type LabelItem = { type: "song"; data: SongForLabelling } | { type: "artist"; data: ArtistForLabelling };
+export type LabelItem =
+	| { type: "song"; data: SongForLabelling }
+	| { type: "artist"; data: ArtistForLabelling };
 
 export function useGenreLabelling() {
 	const { data, error, isLoading } = useSWR("genre-labelling-session", fetchLabellingSession, {
@@ -37,6 +39,16 @@ export function useGenreLabelling() {
 		setSelectedSubGenres([]);
 	}
 
+	function next() {
+		setCurrentIndex((i) => i + 1);
+		setSelectedSubGenres([]);
+		setExpandedGenre(null);
+	}
+
+	function reset() {
+		setFailedAttempts(0);
+	}
+
 	async function submit() {
 		if (!currentItem || selectedSubGenres.length === 0 || submitting) return;
 		setSubmitting(true);
@@ -61,16 +73,6 @@ export function useGenreLabelling() {
 		} finally {
 			setSubmitting(false);
 		}
-	}
-
-	function next() {
-		setCurrentIndex((i) => i + 1);
-		setSelectedSubGenres([]);
-		setExpandedGenre(null);
-	}
-
-	function reset() {
-		setFailedAttempts(0);
 	}
 
 	return {
