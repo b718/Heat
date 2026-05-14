@@ -1,53 +1,46 @@
 "use client";
 
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useState } from "react";
 
-import { getArtist, playArtistTopTrack } from "@/services/music-player";
+import { LabelItem } from "@/hooks/useGenreLabelling";
+import { useSpotifyPlayback } from "@/hooks/useSpotifyPlayback";
+import { useToken } from "@/hooks/useToken";
+import { getArtist } from "@/services/music-player";
 import type { SpotifyPlayer, SpotifyPlayerState } from "@/types/spotify-sdk";
 import { GetArtistResponse } from "@heat/types";
+import useSWR from "swr";
 
 import PlayerControls from "./PlayerControls";
 import PlayerDuration from "./PlayerDuration";
 
 interface Props {
-	token: string;
 	deviceId: string | null;
-	artistId: string;
-	artistName: string;
+	currentItem: LabelItem;
 	playerRef: RefObject<SpotifyPlayer | null>;
 	playerState: SpotifyPlayerState | null;
-	pausePlayer: () => void;
 	position: number;
 	setPosition: (value: number | ((prev: number) => number)) => void;
 }
 
 export default function ArtistPlayer({
-	token,
 	deviceId,
-	artistId,
-	artistName,
+	currentItem,
 	playerRef,
 	playerState,
-	pausePlayer,
 	position,
 	setPosition,
 }: Props) {
+	const artistId = currentItem.data.id;
 	const [volume, setVolume] = useState(0.5);
-	const [artistInfo, setArtistInfo] = useState<GetArtistResponse | null>(null);
-	const [artistLoading, setArtistLoading] = useState(true);
-	const [artistError, setArtistError] = useState<string | null>(null);
-
-	useEffect(() => {
-		if (!deviceId) return;
-		pausePlayer();
-		setArtistLoading(true);
-		setArtistError(null);
-
-		Promise.all([playArtistTopTrack(deviceId, artistName, token), getArtist(artistId, token)])
-			.then(([_, response]) => setArtistInfo(response))
-			.catch(() => setArtistError("Failed to load artist."))
-			.finally(() => setArtistLoading(false));
-	}, [artistId, artistName, token, deviceId]);
+	const { data: token } = useToken();
+	const {
+		data: artistInfo,
+		error: artistError,
+		isLoading: artistLoading,
+	} = useSWR<GetArtistResponse, Error, [string, string]>([artistId, token], ([artistId, token]) =>
+		getArtist(artistId, token),
+	);
+	const { error, loading } = useSpotifyPlayback({ currentItem, deviceId });
 
 	async function handleSeek(ms: number) {
 		setPosition(ms);
@@ -69,7 +62,7 @@ export default function ArtistPlayer({
 		);
 	}
 
-	if (artistLoading) {
+	if (artistLoading || loading) {
 		return (
 			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
 				<p className="text-zinc-400 text-sm text-center">Loading artist...</p>
@@ -77,10 +70,10 @@ export default function ArtistPlayer({
 		);
 	}
 
-	if (artistError || !artistInfo) {
+	if (artistError || !artistInfo || error) {
 		return (
 			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
-				<p className="text-red-400 text-sm text-center">{artistError ?? "Failed to load artist."}</p>
+				<p className="text-red-400 text-sm text-center">{error ?? "Failed to load artist."}</p>
 			</div>
 		);
 	}

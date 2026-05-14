@@ -1,17 +1,17 @@
 "use client";
 
-import { RefObject, useEffect, useState } from "react";
+import { RefObject, useState } from "react";
 
-import { playTrack } from "@/services/music-player";
+import { LabelItem } from "@/hooks/useGenreLabelling";
+import { useSpotifyPlayback } from "@/hooks/useSpotifyPlayback";
 import type { SpotifyPlayer, SpotifyPlayerState, SpotifyTrack } from "@/types/spotify-sdk";
 
 import PlayerControls from "./PlayerControls";
 import PlayerDuration from "./PlayerDuration";
 
 interface Props {
-	token: string;
 	deviceId: string | null;
-	trackId: string;
+	currentItem: LabelItem;
 	playerRef: RefObject<SpotifyPlayer | null>;
 	playerState: SpotifyPlayerState | null;
 	position: number;
@@ -19,23 +19,15 @@ interface Props {
 }
 
 export default function SongPlayer({
-	token,
 	deviceId,
-	trackId,
+	currentItem,
 	playerRef,
 	playerState,
 	position,
 	setPosition,
 }: Props) {
-	const [volume, setVolume] = useState(0.5);
-
-	useEffect(() => {
-		if (!deviceId) return;
-		const play = async () => {
-			await playTrack(deviceId, trackId, token);
-		};
-		play();
-	}, [trackId, deviceId, token]);
+	const [volume, setVolume] = useState(0.25);
+	const { error, loading } = useSpotifyPlayback({ currentItem, deviceId });
 
 	if (!playerState) {
 		return (
@@ -43,6 +35,22 @@ export default function SongPlayer({
 				<p className="text-zinc-400 text-sm text-center">
 					Open Spotify and transfer playback to '{"Heat (Playback)"}'
 				</p>
+			</div>
+		);
+	}
+
+	if (loading) {
+		return (
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+				<p className="text-zinc-400 text-sm text-center">Loading song...</p>
+			</div>
+		);
+	}
+
+	if (error) {
+		return (
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+				<p className="text-red-400 text-sm text-center">{error ?? "Failed to load song information."}</p>
 			</div>
 		);
 	}

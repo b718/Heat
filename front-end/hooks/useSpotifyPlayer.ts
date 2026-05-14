@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 import type { SpotifyPlayer, SpotifyPlayerState } from "@/types/spotify-sdk";
 
-export function useSpotifyPlayer(token: string) {
+import { useToken } from "./useToken";
+
+export function useSpotifyPlayer() {
+	const { data: token } = useToken();
 	const playerRef = useRef<SpotifyPlayer | null>(null);
 	const [playerState, setPlayerState] = useState<SpotifyPlayerState | null>(null);
 	const [deviceId, setDeviceId] = useState<string | null>(null);
@@ -12,8 +15,6 @@ export function useSpotifyPlayer(token: string) {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		if (!token) return;
-
 		window.onSpotifyWebPlaybackSDKReady = () => {
 			const player = new window.Spotify.Player({
 				name: "Heat (Playback)",
@@ -49,11 +50,7 @@ export function useSpotifyPlayer(token: string) {
 		return () => {
 			playerRef.current?.disconnect();
 		};
-	}, [token]);
+	}, []);
 
-	function pause() {
-		playerRef.current?.pause();
-	}
-
-	return { playerRef, deviceId, playerState, loading, error, pause };
+	return { playerRef, deviceId, playerState, loading, error };
 }
