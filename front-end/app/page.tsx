@@ -36,5 +36,5 @@ export default function Home() {
 		);
 	}
 
-	return <GenreGame token={token} />;
+	return <GenreGame />;
 }
