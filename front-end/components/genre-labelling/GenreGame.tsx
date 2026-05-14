@@ -6,20 +6,20 @@ import { useGenreLabelling } from "@/hooks/useGenreLabelling";
 import { usePlaybackPosition } from "@/hooks/usePlaybackPosition";
 import { useRecordingSkip } from "@/hooks/useRecordingSkip";
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
+import { useToken } from "@/hooks/useToken";
 
 import ArtistPlayer from "../player/ArtistPlayer";
 import SongPlayer from "../player/SongPlayer";
 import GenreSelector from "./GenreSelector";
 
-export default function GenreGame({ token }: { token: string }) {
+export default function GenreGame() {
 	const {
 		playerRef,
 		deviceId,
 		playerState,
 		loading: spotifyPlayerLoading,
 		error: spotifyPlayerError,
-		pause,
-	} = useSpotifyPlayer(token);
+	} = useSpotifyPlayer();
 	const { position, setPosition } = usePlaybackPosition(playerState);
 	const {
 		items,
@@ -112,9 +112,9 @@ export default function GenreGame({ token }: { token: string }) {
 			<ProgressBar currentIndex={currentIndex} items={items} />
 			{currentItem.type === "song" ? (
 				<SongPlayer
-					token={token}
+					key={currentItem.data.id}
 					deviceId={deviceId}
-					trackId={currentItem.data.id}
+					currentItem={currentItem}
 					playerRef={playerRef}
 					playerState={playerState}
 					position={position}
@@ -122,13 +122,11 @@ export default function GenreGame({ token }: { token: string }) {
 				/>
 			) : (
 				<ArtistPlayer
-					token={token}
+					key={currentItem.data.id}
 					deviceId={deviceId}
-					artistId={currentItem.data.id}
-					artistName={currentItem.data.name}
+					currentItem={currentItem}
 					playerRef={playerRef}
 					playerState={playerState}
-					pausePlayer={pause}
 					position={position}
 					setPosition={setPosition}
 				/>
