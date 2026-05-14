@@ -29,7 +29,7 @@ export async function skip(request: SkipRequest): Promise<void> {
 }
 
 export async function playTrack(deviceId: string, trackId: string, token: string): Promise<void> {
-	await fetch(`${spotifyApiURL}/v1/me/player/play?device_id=${deviceId}`, {
+	const response = await fetch(`${spotifyApiURL}/v1/me/player/play?device_id=${deviceId}`, {
 		method: "PUT",
 		headers: {
 			Authorization: `Bearer ${token}`,
@@ -37,12 +37,14 @@ export async function playTrack(deviceId: string, trackId: string, token: string
 		},
 		body: JSON.stringify({ uris: [`spotify:track:${trackId}`] }),
 	});
+	if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 }
 
 export async function getArtist(artistId: string, token: string): Promise<GetArtistResponse> {
 	const response = await fetch(`${spotifyApiURL}/v1/artists/${artistId}`, {
 		headers: { Authorization: `Bearer ${token}` },
 	});
+	if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 	return await response.json();
 }
 
@@ -59,6 +61,7 @@ export async function playArtistTopTrack(
 	const response = await fetch(`${spotifyApiURL}/v1/search?${queryParams.toString()}`, {
 		headers: { Authorization: `Bearer ${token}` },
 	});
+	if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 	const deserializedResponse: ArtistQueryResponse = await response.json();
 	const trackId = deserializedResponse.tracks.items.at(0)?.id;
 	if (!trackId) throw new Error("unable to load artist data");
