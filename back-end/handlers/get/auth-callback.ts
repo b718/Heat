@@ -1,18 +1,18 @@
+import { SECONDS_TO_MILLISECONDS } from "@heat/consts";
 import type { AccessToken } from "@heat/types";
+import { randomUUIDv7 } from "bun";
 import type { Context } from "hono";
+
+import { setSession } from "../../modules/sessions/session-store";
 
 const REDIRECT_URI = "http://127.0.0.1:3001/auth/callback";
 const HEAT_HOME_PAGE_URL = "http://localhost:3000";
-
-let accessToken = "";
-export function getAccessToken() {
-	return accessToken;
-}
 
 export async function authCallback(c: Context) {
 	const code = c.req.query("code");
 	if (!code) return c.text("Missing code", 400);
 
+	const sessionId = randomUUIDv7();
 	const clientId = process.env.SPOTIFY_CLIENT_ID!;
 	const clientSecret = process.env.SPOTIFY_CLIENT_SECRET!;
 	const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
@@ -33,10 +33,14 @@ export async function authCallback(c: Context) {
 		});
 
 		const data = (await response.json()) as AccessToken;
-		accessToken = data.access_token ?? "";
+		setSession(sessionId, {
+			accessToken: data.access_token,
+			refreshToken: data.refresh_token,
+			expiresAt: Date.now() + data.expires_in * SECONDS_TO_MILLISECONDS,
+		});
 	} catch (err) {
 		return c.text("Token exchange failed", 500);
 	}
 
-	return c.redirect(HEAT_HOME_PAGE_URL);
+	return c.redirect(HEAT_HOME_PAGE_URL + `?` + `session_id=${sessionId}`);
 }
