@@ -5,7 +5,7 @@ import useSWR from "swr";
 export function useToken() {
 	const { sessionId } = useSession();
 
-	const { data, error, isLoading } = useSWR<string, Error, [string, string] | null>(
+	const { data, error, isLoading } = useSWR<string | null, Error, [string, string] | null>(
 		sessionId ? ["fetch-token", sessionId] : null,
 		([_, id]) => fetchToken(id),
 	);
