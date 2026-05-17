@@ -6,7 +6,6 @@ import { useGenreLabelling } from "@/hooks/useGenreLabelling";
 import { usePlaybackPosition } from "@/hooks/usePlaybackPosition";
 import { useRecordingSkip } from "@/hooks/useRecordingSkip";
 import { useSpotifyPlayer } from "@/hooks/useSpotifyPlayer";
-import { useToken } from "@/hooks/useToken";
 
 import ArtistPlayer from "../player/ArtistPlayer";
 import SongPlayer from "../player/SongPlayer";
