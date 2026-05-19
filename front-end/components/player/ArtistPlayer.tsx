@@ -37,8 +37,9 @@ export default function ArtistPlayer({
 		data: artistInfo,
 		error: artistError,
 		isLoading: artistLoading,
-	} = useSWR<GetArtistResponse, Error, [string, string]>([artistId, token], ([artistId, token]) =>
-		getArtist(artistId, token),
+	} = useSWR<GetArtistResponse, Error, [string, string] | null>(
+		token ? [artistId, token] : null,
+		([artistId, token]) => getArtist(artistId, token),
 	);
 	const { error, loading } = useSpotifyPlayback({ currentItem, deviceId });
 
