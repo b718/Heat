@@ -1,1 +1,2 @@
 @AGENTS.md
+@.agents/skills/vercel-react-best-practices/SKILL.md
