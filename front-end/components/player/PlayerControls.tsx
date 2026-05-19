@@ -36,8 +36,10 @@ export default function PlayerControls({
 			<button
 				disabled={!hasPreviousTracks}
 				onClick={async () => {
-					await player?.previousTrack();
-					await skip(buildSkipRequest("backwards", currentTrack, position));
+					await Promise.all([
+						player?.previousTrack(),
+						skip(buildSkipRequest("backwards", currentTrack, position)),
+					]);
 				}}
 				className="rounded-full bg-zinc-700 px-4 py-2 text-sm font-bold hover:bg-zinc-600 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			>
@@ -46,8 +48,10 @@ export default function PlayerControls({
 			<button
 				disabled={!hasNextTracks}
 				onClick={async () => {
-					await player?.nextTrack();
-					await skip(buildSkipRequest("forwards", currentTrack, position));
+					await Promise.all([
+						player?.nextTrack(),
+						skip(buildSkipRequest("forwards", currentTrack, position)),
+					]);
 				}}
 				className="rounded-full bg-zinc-700 px-4 py-2 text-sm font-bold hover:bg-zinc-600 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
 			>
