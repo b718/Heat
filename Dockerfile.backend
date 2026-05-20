@@ -13,7 +13,6 @@ COPY front-end/package.json ./front-end/
 
 RUN bun install
 
-# Copy workspace source, excluding the seed directory
 COPY packages ./packages
 COPY back-end ./back-end
 
