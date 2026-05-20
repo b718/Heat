@@ -1,0 +1,26 @@
+# syntax=docker/dockerfile:1.7-labs
+
+FROM oven/bun:1 AS base
+WORKDIR /app
+
+# Copy workspace manifests first so dependency installs are cached
+COPY package.json bun.lock ./
+COPY packages/consts/package.json ./packages/consts/
+COPY packages/types/package.json ./packages/types/
+
+COPY back-end/package.json ./back-end/
+COPY front-end/package.json ./front-end/
+
+RUN bun install
+
+# Copy workspace source, excluding the seed directory
+COPY packages ./packages
+COPY back-end ./back-end
+
+WORKDIR /app/back-end
+
+RUN bunx prisma generate
+
+EXPOSE 3001
+
+CMD ["bun", "run", "index.ts"]
