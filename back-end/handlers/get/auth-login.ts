@@ -1,7 +1,11 @@
 import type { Context } from "hono";
 
+import { getLogger } from "../../logger/logger";
+
 const SCOPES = "streaming user-read-email user-read-private user-modify-playback-state";
 const REDIRECT_URI = "http://127.0.0.1:3001/auth/callback";
+
+const logger = getLogger(__filename);
 
 export async function authLogin(c: Context) {
 	const clientId = process.env.SPOTIFY_CLIENT_ID!;
@@ -14,5 +18,6 @@ export async function authLogin(c: Context) {
 		state,
 	});
 
+	logger.info({ state }, "redirecting user to spotify authorize endpoint");
 	return c.redirect(`https://accounts.spotify.com/authorize?${params.toString()}`);
 }

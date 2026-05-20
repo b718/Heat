@@ -3,14 +3,20 @@ import type { AccessToken } from "@heat/types";
 import { randomUUIDv7 } from "bun";
 import type { Context } from "hono";
 
+import { getLogger } from "../../logger/logger";
 import { setSession } from "../../modules/sessions/session-store";
 
 const REDIRECT_URI = "http://127.0.0.1:3001/auth/callback";
 const HEAT_HOME_PAGE_URL = "http://localhost:3000";
 
+const logger = getLogger(__filename);
+
 export async function authCallback(c: Context) {
 	const code = c.req.query("code");
-	if (!code) return c.text("Missing code", 400);
+	if (!code) {
+		logger.warn("auth/callback request missing code");
+		return c.text("Missing code", 400);
+	}
 
 	const sessionId = randomUUIDv7();
 	const clientId = process.env.SPOTIFY_CLIENT_ID!;
@@ -23,6 +29,7 @@ export async function authCallback(c: Context) {
 	});
 
 	try {
+		logger.info({ sessionId }, "exchanging spotify auth code for access token");
 		const response = await fetch("https://accounts.spotify.com/api/token", {
 			method: "POST",
 			headers: {
@@ -38,7 +45,9 @@ export async function authCallback(c: Context) {
 			refreshToken: data.refresh_token,
 			expiresAt: Date.now() + data.expires_in * SECONDS_TO_MILLISECONDS,
 		});
+		logger.info({ sessionId }, "spotify token exchange succeeded, session stored");
 	} catch (err) {
+		logger.error({ err, sessionId }, "spotify token exchange failed");
 		return c.text("Token exchange failed", 500);
 	}
 

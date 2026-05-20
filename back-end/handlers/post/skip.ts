@@ -7,7 +7,7 @@ import type { ArtistRepository } from "../../modules/repositories/artist/artist-
 import type { SkipRepository } from "../../modules/repositories/skip/skip-repository";
 import type { SongRepository } from "../../modules/repositories/song/song-repository";
 
-const logger = getLogger();
+const logger = getLogger(__filename);
 
 export function skip(
 	artistRepository: ArtistRepository,
