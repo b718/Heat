@@ -7,16 +7,18 @@ WORKDIR /app
 COPY package.json bun.lock ./
 COPY packages/consts/package.json ./packages/consts/
 COPY packages/types/package.json ./packages/types/
-
 COPY back-end/package.json ./back-end/
 COPY front-end/package.json ./front-end/
-
 RUN bun install
 
 COPY packages ./packages
 COPY back-end ./back-end
 
 WORKDIR /app/back-end
+
+# Dummy value so `prisma generate` doesn't complain about a missing env var.
+# The real DATABASE_URL must be provided at `docker run` time.
+ENV DATABASE_URL="postgresql://user:password@localhost:5432/db"
 
 RUN bunx prisma generate
 
