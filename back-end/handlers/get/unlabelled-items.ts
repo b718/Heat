@@ -10,7 +10,7 @@ const logger = getLogger(__filename);
 export function unlabelledItems(songRepository: SongRepository, artistRepository: ArtistRepository) {
 	return async (c: Context) => {
 		try {
-			logger.debug("fetching unlabelled artists and songs");
+			logger.info("fetching unlabelled artists and songs");
 			const [unlabelledArtists, unlabelledSongs] = await Promise.all([
 				artistRepository.fetchUnlabelledArtists(),
 				songRepository.fetchUnlabelledSongs(),

@@ -7,10 +7,10 @@ const logger = getLogger(__filename);
 
 export async function genres(c: Context) {
 	try {
-		logger.debug("loading genres from disk");
+		logger.info("loading genres from disk");
 		const file = Bun.file(new URL("../../data/genres/genres.json", import.meta.url));
 		const response: Genres = await file.json();
-		logger.debug({ count: Object.keys(response).length }, "loaded genres");
+		logger.info({ count: Object.keys(response).length }, "loaded genres");
 		return c.json(response);
 	} catch (err) {
 		logger.error({ err }, "failed to read genres");
