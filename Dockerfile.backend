@@ -22,6 +22,4 @@ ENV DATABASE_URL="postgresql://user:password@localhost:5432/db"
 
 RUN bunx prisma generate
 
-EXPOSE 3001
-
 CMD ["bun", "run", "index.ts"]
