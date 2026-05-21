@@ -6,8 +6,8 @@ import type { Context } from "hono";
 import { getLogger } from "../../logger/logger";
 import { setSession } from "../../modules/sessions/session-store";
 
-const REDIRECT_URI = "http://127.0.0.1:3001/auth/callback";
-const HEAT_HOME_PAGE_URL = "http://localhost:3000";
+const REDIRECT_URI = process.env.REDIRECT_URI!;
+const HEAT_HOME_PAGE_URL = process.env.HEAT_HOME_PAGE_URL!;
 
 const logger = getLogger(__filename);
 
