@@ -9,7 +9,7 @@ interface SessionContextValue {
 const SessionContext = createContext<SessionContextValue | undefined>(undefined);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
-	const [sessionId, setSessionId] = useState<string | null>(() => sessionStorage.getItem("session_id"));
+	const [sessionId, setSessionId] = useState<string | null>(null);
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
