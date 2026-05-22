@@ -1,12 +1,16 @@
 mod postgres './justfiles/postgres.just'
 mod prisma './justfiles/prisma.just'
+mod env './justfiles/env.just'
 
 default:
     @just --list
 
 # Set-up local dev
 set-up-local-dev:
+    @just env::setup
+    @bun install
     @just postgres::start
     @sleep 1
+    @bunx --bun prisma generate
     @bun seed/seed.ts
     @bun run dev
