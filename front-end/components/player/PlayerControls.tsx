@@ -30,9 +30,28 @@ export default function PlayerControls({
 			<div className="flex w-full items-center gap-2">
 				<button
 					onClick={() => player?.togglePlay()}
-					className="flex-1 rounded-full bg-green-500 py-2 text-sm font-bold hover:bg-green-400 transition-colors cursor-pointer"
+					aria-label={paused ? "Play" : "Pause"}
+					className="flex flex-1 items-center justify-center rounded-full bg-green-500 py-2 hover:bg-green-400 transition-colors cursor-pointer"
 				>
-					{paused ? "▶" : "⏸"}
+					{paused ? (
+						<svg
+							viewBox="0 0 16 16"
+							xmlns="http://www.w3.org/2000/svg"
+							aria-hidden="true"
+							className="h-4 w-4 fill-black"
+						>
+							<path d="M3 1.713a.7.7 0 0 1 1.05-.607l10.89 6.288a.7.7 0 0 1 0 1.212L4.05 14.894A.7.7 0 0 1 3 14.288V1.713z" />
+						</svg>
+					) : (
+						<svg
+							viewBox="0 0 16 16"
+							xmlns="http://www.w3.org/2000/svg"
+							aria-hidden="true"
+							className="h-4 w-4 fill-black"
+						>
+							<path d="M2.7 1a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7H2.7zm8 0a.7.7 0 0 0-.7.7v12.6a.7.7 0 0 0 .7.7h2.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-2.6z" />
+						</svg>
+					)}
 				</button>
 				<button
 					disabled={!hasPreviousTracks}
