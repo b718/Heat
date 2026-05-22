@@ -31,7 +31,7 @@ export default function SongPlayer({
 
 	if (!playerState) {
 		return (
-			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 				<p className="text-zinc-400 text-sm text-center">
 					Open Spotify and transfer playback to '{"Heat (Playback)"}'
 				</p>
@@ -41,7 +41,7 @@ export default function SongPlayer({
 
 	if (loading) {
 		return (
-			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 				<p className="text-zinc-400 text-sm text-center">Loading song...</p>
 			</div>
 		);
@@ -49,7 +49,7 @@ export default function SongPlayer({
 
 	if (error) {
 		return (
-			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 				<p className="text-red-400 text-sm text-center">{error ?? "Failed to load song information."}</p>
 			</div>
 		);
@@ -68,7 +68,7 @@ export default function SongPlayer({
 	const currentTrack = playerState.track_window.current_track;
 
 	return (
-		<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+		<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 			<SongArt track={currentTrack} />
 			<SongDescription track={currentTrack} />
 			<PlayerDuration position={position} durationMs={currentTrack.duration_ms} onSeek={handleSeek} />
