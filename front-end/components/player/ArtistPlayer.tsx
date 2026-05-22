@@ -55,7 +55,7 @@ export default function ArtistPlayer({
 
 	if (!playerState) {
 		return (
-			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 				<p className="text-zinc-400 text-sm text-center">
 					Open Spotify and transfer playback to '{"Heat (Playback)"}'
 				</p>
@@ -65,7 +65,7 @@ export default function ArtistPlayer({
 
 	if (artistLoading || loading) {
 		return (
-			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 				<p className="text-zinc-400 text-sm text-center">Loading artist...</p>
 			</div>
 		);
@@ -73,7 +73,7 @@ export default function ArtistPlayer({
 
 	if (artistError || !artistInfo || error) {
 		return (
-			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+			<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 				<p className="text-red-400 text-sm text-center">{error ?? "Failed to load artist."}</p>
 			</div>
 		);
@@ -82,7 +82,7 @@ export default function ArtistPlayer({
 	const currentTrack = playerState.track_window.current_track;
 
 	return (
-		<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-3xl mt-4">
+		<div className="rounded-xl px-6 py-5 flex flex-col items-center gap-4 w-full max-w-3xl mt-4">
 			<ArtistArt artist={artistInfo} />
 			<ArtistDescription artist={artistInfo} />
 			<PlayerDuration position={position} durationMs={currentTrack.duration_ms} onSeek={handleSeek} />

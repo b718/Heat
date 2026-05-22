@@ -26,62 +26,66 @@ export default function PlayerControls({
 	const hasNextTracks = track_window.next_tracks.length > 0;
 
 	return (
-		<div className="flex w-full items-center gap-2">
-			<button
-				onClick={() => player?.togglePlay()}
-				className="flex-1 rounded-full bg-green-500 py-2 text-sm font-bold hover:bg-green-400 transition-colors cursor-pointer"
-			>
-				{paused ? "▶" : "⏸"}
-			</button>
-			<button
-				disabled={!hasPreviousTracks}
-				onClick={async () => {
-					await Promise.all([
-						player?.previousTrack(),
-						skip(buildSkipRequest("backwards", currentTrack, position)),
-					]);
-				}}
-				className="rounded-full bg-zinc-700 px-4 py-2 text-sm font-bold hover:bg-zinc-600 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-			>
-				{"<<"}
-			</button>
-			<button
-				disabled={!hasNextTracks}
-				onClick={async () => {
-					await Promise.all([
-						player?.nextTrack(),
-						skip(buildSkipRequest("forwards", currentTrack, position)),
-					]);
-				}}
-				className="rounded-full bg-zinc-700 px-4 py-2 text-sm font-bold hover:bg-zinc-600 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-			>
-				{">>"}
-			</button>
-			<svg
-				viewBox="0 0 16 16"
-				xmlns="http://www.w3.org/2000/svg"
-				aria-hidden="true"
-				className="h-4 w-4 text-zinc-400 shrink-0"
-			>
-				<path
-					d="M7.14645 1.85356C7.46143 1.53858 8 1.76167 8 2.20712V13.7929C8 14.2384 7.46143 14.4614 7.14645 14.1465L4 11H1.5C1.22386 11 1 10.7762 1 10.5V5.50001C1 5.22387 1.22386 5.00001 1.5 5.00001H4L7.14645 1.85356Z"
-					fill="currentColor"
+		<div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center">
+			<div className="flex w-full items-center gap-2">
+				<button
+					onClick={() => player?.togglePlay()}
+					className="flex-1 rounded-full bg-green-500 py-2 text-sm font-bold hover:bg-green-400 transition-colors cursor-pointer"
+				>
+					{paused ? "▶" : "⏸"}
+				</button>
+				<button
+					disabled={!hasPreviousTracks}
+					onClick={async () => {
+						await Promise.all([
+							player?.previousTrack(),
+							skip(buildSkipRequest("backwards", currentTrack, position)),
+						]);
+					}}
+					className="rounded-full bg-zinc-700 px-4 py-2 text-sm font-bold hover:bg-zinc-600 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+				>
+					{"<<"}
+				</button>
+				<button
+					disabled={!hasNextTracks}
+					onClick={async () => {
+						await Promise.all([
+							player?.nextTrack(),
+							skip(buildSkipRequest("forwards", currentTrack, position)),
+						]);
+					}}
+					className="rounded-full bg-zinc-700 px-4 py-2 text-sm font-bold hover:bg-zinc-600 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+				>
+					{">>"}
+				</button>
+			</div>
+			<div className="flex w-full items-center gap-2 sm:w-auto">
+				<svg
+					viewBox="0 0 16 16"
+					xmlns="http://www.w3.org/2000/svg"
+					aria-hidden="true"
+					className="h-4 w-4 text-zinc-400 shrink-0"
+				>
+					<path
+						d="M7.14645 1.85356C7.46143 1.53858 8 1.76167 8 2.20712V13.7929C8 14.2384 7.46143 14.4614 7.14645 14.1465L4 11H1.5C1.22386 11 1 10.7762 1 10.5V5.50001C1 5.22387 1.22386 5.00001 1.5 5.00001H4L7.14645 1.85356Z"
+						fill="currentColor"
+					/>
+					<path
+						d="M12 7.99999C12 9.48649 10.9189 10.7205 9.5 10.9585V5.04147C10.9189 5.27951 12 6.5135 12 7.99999Z"
+						fill="currentColor"
+					/>
+				</svg>
+				<input
+					type="range"
+					min={0}
+					max={1}
+					step={0.01}
+					value={volume}
+					onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
+					className="slider w-full sm:w-24"
+					style={{ background: sliderGradient(volumePercentage) }}
 				/>
-				<path
-					d="M12 7.99999C12 9.48649 10.9189 10.7205 9.5 10.9585V5.04147C10.9189 5.27951 12 6.5135 12 7.99999Z"
-					fill="currentColor"
-				/>
-			</svg>
-			<input
-				type="range"
-				min={0}
-				max={1}
-				step={0.01}
-				value={volume}
-				onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
-				className="slider w-24"
-				style={{ background: sliderGradient(volumePercentage) }}
-			/>
+			</div>
 		</div>
 	);
 }
