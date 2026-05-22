@@ -57,6 +57,7 @@ body {
 		height 0.15s;
 }
 
+/* Only on devices with a precise pointer (mouse/trackpad) */
 @media (pointer: fine) {
 	.slider::-webkit-slider-thumb {
 		width: 0;
