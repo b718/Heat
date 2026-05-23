@@ -27,7 +27,7 @@ async function seed() {
 		data: artists.map((a) => ({
 			id: a.id,
 			name: a.name,
-			genres: a.genres,
+			genres: [],
 		})),
 	});
 
@@ -37,7 +37,7 @@ async function seed() {
 			data: {
 				id: song.id,
 				name: song.name,
-				genres: song.genres,
+				genres: [],
 				artists: {
 					connect: song.artists.map((id) => ({ id })),
 				},
