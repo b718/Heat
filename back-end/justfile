@@ -14,3 +14,7 @@ set-up-local-dev:
     @bunx --bun prisma generate
     @bun seed/seed.ts
     @bun run dev
+
+# Run the local-only admin dashboard (http://127.0.0.1:3002)
+start-admin-dashboard:
+    @bun run admin
