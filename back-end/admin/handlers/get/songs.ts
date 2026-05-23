@@ -2,6 +2,7 @@ import type { Context } from "hono";
 
 import { getLogger } from "../../../logger/logger";
 import type { SongRepository } from "../../repositories/song-repository";
+import type { ErrorResponse } from "../../types/types";
 
 const logger = getLogger(__filename);
 
@@ -14,7 +15,8 @@ export function songs(songRepository: SongRepository) {
 			return c.json(songs);
 		} catch (err) {
 			logger.error({ err }, "failed to fetch songs for admin");
-			return c.json({ ok: false }, 500);
+			const response: ErrorResponse = { ok: false, error: "failed to fetch songs" };
+			return c.json(response, 500);
 		}
 	};
 }

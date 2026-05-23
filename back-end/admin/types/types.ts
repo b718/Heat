@@ -23,3 +23,8 @@ export type SongDetail = {
 export type UpdateSongGenresRequest = {
 	genres: string[];
 };
+
+export type ErrorResponse = {
+	ok: false;
+	error: string;
+};

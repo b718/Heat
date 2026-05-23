@@ -2,6 +2,7 @@ import type { Context } from "hono";
 
 import { getLogger } from "../../../logger/logger";
 import type { SongRepository } from "../../repositories/song-repository";
+import type { ErrorResponse } from "../../types/types";
 
 const logger = getLogger(__filename);
 
@@ -15,12 +16,14 @@ export function songDetail(songRepository: SongRepository) {
 			const detail = await songRepository.fetchSongDetail(songId);
 			if (detail === null) {
 				logger.info({ songId }, "song detail not found");
-				return c.json({ ok: false }, 404);
+				const response: ErrorResponse = { ok: false, error: "song not found" };
+				return c.json(response, 404);
 			}
 			return c.json(detail);
 		} catch (err) {
 			logger.error({ err, songId }, "failed to fetch song detail for admin");
-			return c.json({ ok: false }, 500);
+			const response: ErrorResponse = { ok: false, error: "failed to fetch song detail" };
+			return c.json(response, 500);
 		}
 	};
 }
