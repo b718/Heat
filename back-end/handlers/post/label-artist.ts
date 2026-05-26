@@ -15,10 +15,7 @@ export function labelArtist(artistRepository: ArtistRepository) {
 				"storing artist labels",
 			);
 			await artistRepository.storeArtistLabels(body.artistId, body.artistName, body.genres);
-			logger.info(
-				{ artistId: body.artistId, artistName: body.artistName },
-				"stored artist labels",
-			);
+			logger.info({ artistId: body.artistId, artistName: body.artistName }, "stored artist labels");
 			return c.json({ ok: true });
 		} catch (err) {
 			logger.error({ err }, "failed to store artist label");
