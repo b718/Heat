@@ -4,7 +4,7 @@ Music is a huge passion of mine, and one idea I always wanted to explore was whe
 
 ## Demo Video
 
-<video src="assets/demo.mov" controls style="max-width: 730px;"></video>
+<video src="https://github.com/user-attachments/assets/64a1caed-17ef-403f-9570-60280f0d815e" controls style="max-width: 730px;"></video>
 
 ## Architecture
 
