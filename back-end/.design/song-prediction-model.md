@@ -35,3 +35,33 @@ What I need to figure out now is how do we properly model the data to allow for 
 1. Genres.
 2. Average time spent on a song.
 
+---
+
+It is also important to think about the perfect condition, ideally what would we want for the data-model representing the song? Let's just start with these two things for now and see where it leads us. We can use this amount of data for now and just get started.
+
+1. Genres.
+2. Related artists.
+
+```
+model Song {
+  id             String @id
+  name           String
+  genres         String[]
+  artists        Artist[]
+}
+
+model Artist {
+  id             String   @id
+  name           String
+  genres         String[]
+  relatedArtists Artist[] @relation("ArtistRelations", references: [id])
+  relatedTo      Artist[] @relation("ArtistRelations", references: [id])
+  songs          Song[]
+}
+```
+
+---
+
+It's also important to think about how I recommend songs to people. When I recommend songs, I always try to ask what they like in advance and then add my own little trick to it. For now, we will only focus on hip-hop. When I recommend songs, I tend to do it in two parts. The first part is to ask the person what they listen to daily; using this is information I will then try to recommend them music that is similar in some manner. The second part is I try to add my own flair to it. I know music well and I know what songs will have people excited.
+
+To make this experiment a bit simpler, I will constrain the system to me; I know what I like so therefore if the system recommends me something I don't like I can inform it. It would also be cool to sprinkle in some flair manually (?).
