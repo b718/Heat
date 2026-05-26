@@ -48,7 +48,7 @@ The genre guessing game is what surfaces these. When players consistently label 
 
 The main thing right now is collecting more guesses. I'm aiming for ~400, that's the threshold I'm estimating to train an v0 model. Once I'm there, I can start tuning against both signals, what users classify songs as and how long before they skip a song and see the results.
 
-If you want to help generate that data, [play here!](https://heat-front-end.vercel.app)
+If you want to help generate data, shoot me a message and I'll add you to the allowlist (Spotify caps apps in development mode at 5 users, so I need to register your Spotify account email manually; You'll also need Spotify Premium). It can be accessed [here](https://heat-guessing.vercel.app/) once you're added!
 
 ### Reflection
 
@@ -60,7 +60,7 @@ Early on, I hit many different obstacles; I didn't have enough data to train a m
 
 #### React at depth
 
-React is a framework I absolutely adore, but in the creation of this project I realized I know literally nothing (lol). Before this, I would always reach for an `useEffect` hook to fetch data, but during this project I noticed a few weird bugs surfacing around the dependency array. So I looked online and found that most people strongly recommend against using `useEffect` to fetch data and instead suggest something like Vercel's `useSWR` — and after using it, I agree. I love that `useSWR` caches the result even when many components access the hook, and overall it deepened my appreciation for the people focused on the web (Shout-out Vercel).
+React is a framework I absolutely adore, but in the creation of this project I realized I know literally nothing (lol). Before this, I would always reach for an `useEffect` hook to fetch data, but during this project I noticed a few weird bugs surfacing around the dependency array. So I looked online and found that most people strongly recommend against using `useEffect` to fetch data and instead suggest something like Vercel's `useSWR` — and after using it, I agree. I love that `useSWR` caches the result even when many components access the hook, and overall it deepened my appreciation for the people focused on the web (shout-out Vercel).
 
 #### Orthogonal modules
 
