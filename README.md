@@ -4,15 +4,46 @@ Music is a huge passion of mine, and one idea I always wanted to explore was whe
 
 ## Demo Video
 
+<video src="https://github.com/user-attachments/assets/2cbb800e-654c-4f0a-85c0-7b4e26963a50" controls style="max-width: 730px;"></video>
+
 ## Architecture
+
+```mermaid
+%%{init: {'theme': 'dark'} }%%
+flowchart TD
+    subgraph User Flow
+        FrontEnd[Front-End] <--> BackEnd[Back-End]
+    end
+
+    FrontEnd <--> MusicProviders["Music Providers (e.g. Spotify)"]
+    BackEnd <--> MusicProviders
+
+    subgraph Databases
+        Postgres[(Postgres)]
+    end
+
+    BackEnd <--> Postgres
+```
 
 ## Tech Stack
 
 ### Front-End
 
+- React (familiar with it, allows me to iterate fast)
+- Next.js (App Router and built-in tooling out of the box)
+- SWR (client-side data fetching with caching and dedup)
+
 ### Back-End
 
+- TypeScript + Bun (fast runtime, AMAZING overall)
+- Hono (lightweight and performant web framework)
+- Prisma (super familiar with it and it pairs well with Postgres)
+- Pino (structured logging that plays nicely with Bun)
+- Spotify Web API (OAuth + playback + track metadata)
+
 ### Database
+
+- Postgres (familiar with it and the relational shape fits songs, artists, and skip events)
 
 ### Local Development
 
